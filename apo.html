@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YKS Kapsamlı ve Kayıtlı Takip Panosu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+        h1 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        .task-manager {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .tyt-header, .ayt-header {
+            padding: 15px 20px;
+            font-size: 1.5em;
+            font-weight: 700;
+            cursor: default;
+            margin-top: 20px;
+        }
+        .tyt-header { background-color: #1a73e8; color: white; }
+        .ayt-header { background-color: #e8710a; color: white; }
+        
+        .subject-group-title {
+            padding: 10px 20px;
+            font-size: 1.1em;
+            font-weight: 600;
+            background-color: #e6e6e6;
+            border-top: 2px solid #ccc;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 1px;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.3s;
+        }
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        .task-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .task-label {
+            flex-grow: 1;
+            font-size: 1em;
+        }
+        
+        /* DURUM RENKLERİ */
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 15px;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid transparent;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Geçiş efekti eklendi */
+        }
+        
+        .status-Eksik { background-color: #ffe0e0; color: #cc0000; border-color: #cc0000; }
+        .status-Bakılıyor { background-color: #fff4e0; color: #e8710a; border-color: #e8710a; }
+        .status-Orta\ düzeyde { background-color: #e0f0ff; color: #1a73e8; border-color: #1a73e8; }
+        .status-Tamamlandı { background-color: #e0ffe0; color: #388e3c; border-color: #388e3c; }
+        
+        /* Tamamlanmış Stil (Üstü Çizme) */
+        .completed {
+            background-color: #f0fff0 !important;
+        }
+        .completed .task-label {
+            text-decoration: line-through;
+            color: #a0a0a0;
+        }
+        
+        .save-info {
+            text-align: center; 
+            padding: 10px 20px; 
+            font-size: 0.9em; 
+            color: #777;
+            background-color: #eee;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>✅ YKS KAPSAMLI VE KAYITLI TAKİP PANOSU</h1>
+
+    <div class="task-manager">
+        
+        <div class="save-info">
+            **Otomatik Kayıt Devrede:** Yaptığınız tüm ilerlemeler tarayıcınızda otomatik olarak kaydedilir.
+        </div>
+
+        <div class="tyt-header">TYT KONULARI</div>
+        
+        <div class="subject-group-title">TÜRKÇE</div>
+        <ul class="task-list" id="tyt-turkce">
+            <li class="task-item"><span class="task-label">Sözcükte ve Cümlede Anlam</span><select id="status-tyt-tr-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Paragraf Çözme Teknikleri</span><select id="status-tyt-tr-2" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Ses Bilgisi</span><select id="status-tyt-tr-3" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Yazım ve Noktalama Kuralları</span><select id="status-tyt-tr-4" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Sözcük Türleri ve Cümle Yapısı (Dil Bilgisi)</span><select id="status-tyt-tr-5" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+
+        <div class="subject-group-title">MATEMATİK</div>
+        <ul class="task-list" id="tyt-matematik">
+            <li class="task-item"><span class="task-label">Temel Kavramlar ve Sayı Sistemleri</span><select id="status-tyt-m-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Eşitsizlikler, Mutlak Değer ve Köklü İfadeler</span><select id="status-tyt-m-2" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Problemler (Tüm Tipler)</span><select id="status-tyt-m-3" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+        
+        <div class="subject-group-title">GEOMETRİ (TYT)</div>
+        <ul class="task-list" id="tyt-geometri">
+            <li class="task-item"><span class="task-label">Temel Kavramlar ve Üçgenler</span><select id="status-tyt-g-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Çokgenler ve Özel Dörtgenler</span><select id="status-tyt-g-2" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+
+        <div class="subject-group-title">FİZİK (TYT)</div>
+        <ul class="task-list" id="tyt-fizik">
+            <li class="task-item"><span class="task-label">Fizik Bilimine Giriş, Madde ve Özellikleri</span><select id="status-tyt-f-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Hareket, Kuvvet ve Enerji</span><select id="status-tyt-f-2" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+        
+        <div class="subject-group-title">KİMYA (TYT)</div>
+        <ul class="task-list" id="tyt-kimya">
+            <li class="task-item"><span class="task-label">Kimya Bilimi, Atom Yapısı ve Periyodik Sistem</span><select id="status-tyt-k-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Maddenin Halleri ve Karışımlar</span><select id="status-tyt-k-2" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+
+        <div class="subject-group-title">BİYOLOJİ (TYT)</div>
+        <ul class="task-list" id="tyt-biyoloji">
+            <li class="task-item"><span class="task-label">Canlıların Temel Bileşenleri ve Hücre</span><select id="status-tyt-b-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Kalıtım ve Ekoloji</span><select id="status-tyt-b-2" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+        
+        <div class="subject-group-title">SOSYAL BİLİMLER (TYT TEMEL)</div>
+        <ul class="task-list" id="tyt-sosyal">
+            <li class="task-item"><span class="task-label">Tarih, Coğrafya ve Felsefenin Temel Konuları</span><select id="status-tyt-s-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+
+        <div class="ayt-header">AYT KONULARI</div>
+
+        <div class="subject-group-title">MATEMATİK</div>
+        <ul class="task-list" id="ayt-matematik">
+            <li class="task-item"><span class="task-label">Trigonometri</span><select id="status-ayt-m-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Logaritma ve Diziler</span><select id="status-ayt-m-2" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+            <li class="task-item"><span class="task-label">Limit, Türev ve İntegral</span><select id="status-ayt-m-3" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+
+        <div class="subject-group-title">GEOMETRİ (AYT)</div>
+        <ul class="task-list" id="ayt-geometri">
+            <li class="task-item"><span class="task-label">Analitik Geometri</span><select id="status-ayt-g-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+
+        <div class="subject-group-title">FİZİK (AYT)</div>
+        <ul class="task-list" id="ayt-fizik">
+            <li class="task-item"><span class="task-label">Hareket ve Momentum</span><select id="status-ayt-f-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+
+        <div class="subject-group-title">KİMYA (AYT)</div>
+        <ul class="task-list" id="ayt-kimya">
+            <li class="task-item"><span class="task-label">Hız, Denge ve Elektrokimya</span><select id="status-ayt-k-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+
+        <div class="subject-group-title">BİYOLOJİ (AYT)</div>
+        <ul class="task-list" id="ayt-biyoloji">
+            <li class="task-item"><span class="task-label">İnsan Fizyolojisi Sistemleri</span><select id="status-ayt-b-1" class="status-badge" onchange="updateStatusAndSave(this)"><option value="Eksik" selected>Eksik</option><option value="Bakılıyor">Bakılıyor</option><option value="Orta düzeyde">Orta düzeyde</option><option value="Tamamlandı">Tamamlandı</option></select></li>
+        </ul>
+        
+    </div>
+
+    <script>
+        // Güncel Durum Sınıfları
+        const ALL_STATUS_CLASSES = ['status-Eksik', 'status-Bakılıyor', 'status-Orta\\ düzeyde', 'status-Tamamlandı'];
+        const STORAGE_KEY = 'yks_konu_takip_durumu';
+
+        /**
+         * Durum Select kutusu değiştiğinde stilini günceller.
+         */
+        function updateStatusStyle(selectElement) {
+            const listItem = selectElement.closest('.task-item');
+            const currentValue = selectElement.value;
+
+            // Mevcut tüm durum sınıflarını kaldır
+            selectElement.classList.remove(...ALL_STATUS_CLASSES);
+            
+            // Yeni duruma uygun sınıfı ekle (Boşlukları escape et)
+            selectElement.classList.add('status-' + currentValue.replace(' ', '\\ '));
+
+            // Tamamlanma stilini (üstü çizme) uygula/kaldır
+            if (currentValue === 'Tamamlandı') {
+                listItem.classList.add('completed'); 
+            } else {
+                listItem.classList.remove('completed');
+            }
+        }
+        
+        /**
+         * Tüm seçimlerin durumunu LocalStorage'a kaydeder.
+         */
+        function saveStatus() {
+            const status = {};
+            document.querySelectorAll('.status-badge').forEach(selectElement => {
+                if (selectElement.id) {
+                    status[selectElement.id] = selectElement.value;
+                }
+            });
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(status));
+            } catch (e) {
+                console.error("LocalStorage'a kayıt yapılırken hata oluştu: ", e);
+            }
+        }
+
+        /**
+         * LocalStorage'dan kayıtlı durumları yükler ve panoya uygular.
+         */
+        function loadStatus() {
+            const savedStatus = localStorage.getItem(STORAGE_KEY);
+            if (savedStatus) {
+                const status = JSON.parse(savedStatus);
+                document.querySelectorAll('.status-badge').forEach(selectElement => {
+                    if (status[selectElement.id] !== undefined) {
+                        selectElement.value = status[selectElement.id];
+                        updateStatusStyle(selectElement); // Yüklenen stili uygula
+                    } else {
+                        // Yeni eklenen konular için varsayılan stili uygula
+                        updateStatusStyle(selectElement);
+                    }
+                });
+            } else {
+                 // İlk çalıştırmada tüm konuları varsayılan stilde göster
+                 document.querySelectorAll('.status-badge').forEach(selectElement => {
+                    updateStatusStyle(selectElement);
+                });
+            }
+        }
+
+        /**
+         * Durum değiştiğinde stili günceller ve kaydeder.
+         */
+        function updateStatusAndSave(selectElement) {
+            updateStatusStyle(selectElement);
+            saveStatus();
+        }
+
+        // Sayfa yüklendiğinde kayıtlı durumları yükle
+        document.addEventListener('DOMContentLoaded', loadStatus);
+    </script>
+</body>
+</html>
